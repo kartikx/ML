@@ -33,8 +33,10 @@ def initialize_parameters(layers_dims):
 def relu(z):
     cache = {}
     cache["z"] = z
-    y = z < 0
+
+    y = z > 0
     z = np.multiply(z, y)
+
     return z, cache
 
 
