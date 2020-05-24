@@ -98,7 +98,7 @@ def sig_backward(dA, z):
 
 
 def linear_backward(dZ, cache):
-    m = cache["A"].shape[1]
+    m = dZ.shape[1]
     dW = np.dot(dZ, cache["A"].T)/m
     dB = np.sum(dZ, axis=1, keepdims=True)/m
     dA = np.dot(cache["W"].T, dZ)
@@ -107,10 +107,10 @@ def linear_backward(dZ, cache):
 
 def linear_activation_backward(dA, cache, activation="relu"):
     if(activation == "relu"):
-        dZ = relu_backward(cache[1]["z"])
+        dZ = relu_backward(dA, cache[1]["z"])
         dW, db, dA = linear_backward(dZ, cache[0])
     if(activation == "sigmoid"):
-        dZ = sig_backward(cache[1]["z"])
+        dZ = sig_backward(dA, cache[1]["z"])
         dW, db, dA = linear_backward(dZ, cache[0])
 
     return dA, dW, db
@@ -151,4 +151,4 @@ def nn(n_iterations, learning_rate):
             print(J)
 
 
-nn(100, 0.5)
+nn(2000, 0.6)
