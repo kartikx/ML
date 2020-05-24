@@ -4,6 +4,12 @@ import sklearn.datasets
 import sklearn.linear_model
 import matplotlib.pyplot as plt
 
+'''
+TO DO
+1. Upload Image as part of Repo
+2. Modularize code.
+'''
+
 np.random.seed(0)
 
 X_orig, Y_orig = sklearn.datasets.make_circles(100, noise=0.05)
