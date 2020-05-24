@@ -43,9 +43,10 @@ def relu(z):
 def sigmoid(z):
     cache = {}
     cache["z"] = z
+
     return 1 / (1 + np.exp(-z)), cache
 
-#in the cache associated with A3, the value of A is correct (i.e. shape is 3,100)
+
 def linear_forward(A, W, b):
     linear_cache = {}
     linear_cache["W"] = W
@@ -54,8 +55,8 @@ def linear_forward(A, W, b):
     return np.dot(W, A) + b, linear_cache
 
 
-def linear_activation_forward(X, W, b, activation="relu"):
-    z, linear_cache = linear_forward(X, W, b)
+def linear_activation_forward(A, W, b, activation="relu"):
+    z, linear_cache = linear_forward(A, W, b)
     if (activation == "relu"):
         a, activation_cache = relu(z)
     elif (activation == "sigmoid"):
@@ -63,9 +64,10 @@ def linear_activation_forward(X, W, b, activation="relu"):
     return a, (linear_cache, activation_cache)
 
 
-def forward_propagation(X, parameters, L):
+
+def forward_propagation(A, parameters, L):
     caches = []
-    a = X
+    a = A
     for i in range(1, L-1):
         aPrev = a
         a, cache = linear_activation_forward(
