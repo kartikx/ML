@@ -13,8 +13,8 @@ def displayPlot(x, y):
     plt.show()
 
 
-X = X.T                       # x is now 2, 100
-Y = Y.reshape(1, Y.shape[0])  # y is 1, 100
+X_data = X_data.T
+Y_data = Y_data.reshape(1, Y_data.shape[0])
 
 layers_dims = [2, 4, 3, 1]
 
