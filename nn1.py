@@ -87,13 +87,14 @@ def compute_cost(y, a):
     return cost
 
 
-def relu_backward(z):
-    return z < 0
+def relu_backward(dA, z):
+    z = (z > 0)
+    return dA * z
 
 
-def sig_backward(z):
-    a, cache = sigmoid(z) # try indicing here?
-    return np.multiply(a, 1 - a)
+def sig_backward(dA, z):
+    s = 1 / (1 + np.exp(-z))
+    return dA*s*(1-s)
 
 
 def linear_backward(dZ, cache):
