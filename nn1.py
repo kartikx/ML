@@ -1,20 +1,40 @@
 import numpy as np
 import sklearn
 import sklearn.datasets
+import sklearn.linear_model
 import matplotlib.pyplot as plt
 
 np.random.seed(0)
 
-X_data, Y_data = sklearn.datasets.make_circles(100, noise=0.05)
+X_orig, Y_orig = sklearn.datasets.make_circles(100, noise=0.05)
 
+X_test_orig, Y_test_orig = sklearn.datasets.make_circles(50, noise=0)
+
+def plot_decision_boundary(pred_func, X, Y):
+    # Set min and max values and give it some padding
+    x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
+    y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
+
+    h = 0.01
+    # Generate a grid of points with distance h between them
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+    # Predict the function value for the whole gid
+    Z = pred_func(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    # Plot the contour and training examples
+    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
+    plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Spectral)
+
+X_test_orig, Y_test_orig = sklearn.datasets.make_moons(50, noise=0)
 
 def displayPlot(x, y):
     plt.scatter(x[:, 0], x[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
     plt.show()
 
 
-X_data = X_data.T
-Y_data = Y_data.reshape(1, Y_data.shape[0])
+X_data = X_orig.T
+Y_data = Y_orig.reshape(1, Y_orig.shape[0])
 
 layers_dims = [2, 4, 3, 1]
 
@@ -138,17 +158,30 @@ def update_parameters(parameters, gradients, L, learning_rate):
     return parameters
 
 
-def nn(n_iterations, learning_rate):
+def nn(n_iterations, learning_rate, toPrint=False):
     L = len(layers_dims)
     parameters = initialize_parameters(layers_dims)
-
+    costs = []
     for i in range(n_iterations):
         aL, caches = forward_propagation(X_data, parameters, L)
         J = compute_cost(Y_data, aL)
         gradients = backward_propagation(Y_data, aL, caches)
         parameters = update_parameters(parameters, gradients, L, learning_rate)
         if(i % 10 == 0):
-            print(J)
+            costs.append(J)
+
+    return parameters, costs
 
 
-nn(2000, 0.6)
+parameters, costs = nn(1000, 0.17, False)
+L = len(layers_dims)
+
+def predict(X):
+    a, caches = forward_propagation(X, parameters, L)
+    a = (a > 0.5)
+    return a
+
+prediction = predict(X_data)
+
+plot_decision_boundary(lambda x: predict(x.T), X_test_orig, Y_test_orig)
+plt.show()
