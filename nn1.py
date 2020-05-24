@@ -81,10 +81,10 @@ def forward_propagation(A, parameters, L):
     return aL, caches
 
 
-def compute_cost(y, a):
-    m = y.shape[1]
-    cost = -(np.dot(y, (np.log(a)).T) + np.dot((1-y), (np.log(1-a)).T))/m
-    return cost
+def compute_cost(Y, A):
+    m = Y.shape[1]
+    cost = -(np.dot(Y, (np.log(A)).T) + np.dot((1-Y), (np.log(1-A)).T))/m
+    return np.squeeze(cost)
 
 
 def relu_backward(dA, z):
@@ -143,9 +143,9 @@ def nn(n_iterations, learning_rate):
     parameters = initialize_parameters(layers_dims)
 
     for i in range(n_iterations):
-        aL, caches = forward_propagation(X, parameters, L)
-        J = compute_cost(Y, aL)
-        gradients = backward_propagation(Y, aL, caches)
+        aL, caches = forward_propagation(X_data, parameters, L)
+        J = compute_cost(Y_data, aL)
+        gradients = backward_propagation(Y_data, aL, caches)
         parameters = update_parameters(parameters, gradients, L, learning_rate)
         if(i % 10 == 0):
             print(J)
