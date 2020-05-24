@@ -32,7 +32,6 @@ def plot_decision_boundary(pred_func, X, Y):
     plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
     plt.scatter(X[:, 0], X[:, 1], c=Y, cmap=plt.cm.Spectral)
 
-X_test_orig, Y_test_orig = sklearn.datasets.make_moons(50, noise=0)
 
 def displayPlot(x, y):
     plt.scatter(x[:, 0], x[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
@@ -88,7 +87,6 @@ def linear_activation_forward(A, W, b, activation="relu"):
     elif (activation == "sigmoid"):
         a, activation_cache = sigmoid(z)
     return a, (linear_cache, activation_cache)
-
 
 
 def forward_propagation(A, parameters, L):
