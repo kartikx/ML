@@ -3,7 +3,9 @@ import sklearn
 import sklearn.datasets
 import matplotlib.pyplot as plt
 
-X, Y = sklearn.datasets.make_circles(100, noise=0.05)
+np.random.seed(0)
+
+X_data, Y_data = sklearn.datasets.make_circles(100, noise=0.05)
 
 
 def displayPlot(x, y):
