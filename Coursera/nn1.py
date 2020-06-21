@@ -16,6 +16,7 @@ X_orig, Y_orig = sklearn.datasets.make_circles(100, noise=0.05)
 
 X_test_orig, Y_test_orig = sklearn.datasets.make_circles(50, noise=0)
 
+
 def plot_decision_boundary(pred_func, X, Y):
     # Set min and max values and give it some padding
     x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
@@ -180,10 +181,12 @@ def nn(n_iterations, learning_rate, toPrint=False):
 parameters, costs = nn(1000, 0.17, False)
 L = len(layers_dims)
 
+
 def predict(X):
     a, caches = forward_propagation(X, parameters, L)
     a = (a > 0.5)
     return a
+
 
 prediction = predict(X_data)
 
